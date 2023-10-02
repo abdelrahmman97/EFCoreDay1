@@ -1,9 +1,27 @@
-﻿namespace EFCoreDay1.Models.User
+﻿using System.Net;
+
+namespace EFCoreDay1.Models
 {
     public class User
     {
-        public string ID { get; set; }
-        public string Name { get; set; }
+        public int ID { get; set; }
+        public string FName { get; set; }
+        public string LName { get; set; }
+        public string SSN { get; set; }
+        public string PhoneNo { get; set; }
+        public string Address { get; set; }
+        public string Username { get; set; }
         public string Email { get; set; }
+        public string HashedPassword { get; set; }
+        public string ProfilePic { get; set; }
+        public int RoleID { get; set; }
+
+        public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<Service> Services { get; set; }
+        public ICollection<RequestOffer> RequestOffer { get; set; }
+        public ICollection<Request> Request { get; set; }
+
+
+
     }
 }

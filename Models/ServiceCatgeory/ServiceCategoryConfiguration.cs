@@ -1,23 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace EFCoreDay1.Models
 {
-    public class ServiceCategoryConfiguration : IEntityTypeConfiguration<ServicCategory>
+    public class ServiceCategoryConfiguration : IEntityTypeConfiguration<ServiceCategory>
     {
-        public void Configure(EntityTypeBuilder<ServicCategory> builder)
+        public void Configure(EntityTypeBuilder<ServiceCategory> builder)
         {
-            builder.HasKey(x => x.Id);  
+            builder.HasKey(x => x.ID);
+            builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
 
-            builder.Property(x => x.Category)
-                .HasColumnType("varchar(30)")
-                .IsRequired();
             //builder.HasMany(e => e.Services)
             //     .WithOne(e => e.Category)
             //     .HasForeignKey(e => e.CategoryId)
