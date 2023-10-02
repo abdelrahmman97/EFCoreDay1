@@ -20,6 +20,9 @@ namespace EFCoreDay1
             modelBuilder.ApplyConfiguration<User>(new UserConfiguration());
             modelBuilder.ApplyConfiguration<Service>(new ServiceConfiguration());
             modelBuilder.ApplyConfiguration<ServiceCategory>(new ServiceCategoryConfiguration());
+            modelBuilder.ApplyConfiguration<Request>(new RequestConfiguration());
+            modelBuilder.ApplyConfiguration<RequestOffer>(new RequestOfferConfiguratoin());
+            modelBuilder.ApplyConfiguration<Media>(new MediaConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

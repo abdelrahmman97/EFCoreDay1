@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EFCoreDay1.Models
 {
-    public class RequestConfigyration : IEntityTypeConfiguration<Request>
+    public class RequestConfiguration : IEntityTypeConfiguration<Request>
     {
 
 
