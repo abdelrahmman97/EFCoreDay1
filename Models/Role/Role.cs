@@ -1,5 +1,5 @@
 ﻿
-namespace EFCoreDay1.Models.Role
+namespace EFCoreDay1.Models
 {
     public class Role
     {
