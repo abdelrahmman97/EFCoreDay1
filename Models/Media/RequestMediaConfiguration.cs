@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EFCoreDay1.Models
 {
-    public class Media : IEntityTypeConfiguration<RequestMedia>
+    public class RequestMediaConfiguration : IEntityTypeConfiguration<RequestMedia>
     {
         public void Configure(EntityTypeBuilder<RequestMedia> builder)
         {

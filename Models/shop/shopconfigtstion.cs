@@ -15,7 +15,7 @@ namespace EFCoreDay1.Models
             builder.HasKey(s => s.ShopID);
             builder.Property(s => s.ShopName).HasMaxLength(50).IsRequired();
             builder.Property(s => s.Address).HasMaxLength(250).IsRequired();
-            builder.Property(s => s.Owner).IsRequired();
+            builder.Property(s => s.Owner).IsRequired();            
         }
     }
 }

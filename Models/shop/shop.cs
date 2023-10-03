@@ -15,6 +15,6 @@ namespace EFCoreDay1.Models
 
         public int OwnerID { get; set; }
         public User Owner { get; set; }
-        public ICollection<product> Products { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }

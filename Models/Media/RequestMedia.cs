@@ -2,7 +2,7 @@
 
 namespace EFCoreDay1.Models
 {
-    public class Media
+    public class RequestMedia
     {
         public int ID { get; set; }
         public string MediaUrl { get; set; }

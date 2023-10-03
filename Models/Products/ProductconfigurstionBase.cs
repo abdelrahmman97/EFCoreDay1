@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EFCoreDay1.Models
 {
-    public class ProductconfigurstionBase : IEntityTypeConfiguration<product>
+    public class ProductconfigurstionBase : IEntityTypeConfiguration<Product>
     {
-        public void Configure(EntityTypeBuilder<product> builder)
+        public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.HasKey(p => p.ProductID);
             builder.Property(p => p.ProductName).HasMaxLength(50);
