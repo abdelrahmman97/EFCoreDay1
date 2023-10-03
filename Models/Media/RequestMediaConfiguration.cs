@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace EFCoreDay1.Models
 {
-    public class MediaConfiguration : IEntityTypeConfiguration<Media>
+    public class Media : IEntityTypeConfiguration<RequestMedia>
     {
-        public void Configure(EntityTypeBuilder<Media> builder)
+        public void Configure(EntityTypeBuilder<RequestMedia> builder)
         {
             builder.ToTable("Media");
             builder.HasKey(i => i.ID);

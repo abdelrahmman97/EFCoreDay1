@@ -7,11 +7,11 @@ namespace EFCoreDay1.Models
     public class  Categoryconfigurstion : IEntityTypeConfiguration<Category>
     {
         public void Configure(EntityTypeBuilder<Category> builder)
-        {     builder.ToTable("Category");
+        {     
+            builder.ToTable("Category");
             builder.HasKey(x => x.Id);
             builder.Property(i => i.Id).ValueGeneratedOnAdd();
             builder.Property(i=>i.Catagory).IsRequired().HasMaxLength(500);
-            builder.HasMany(c => c.Products).WithOne(c => c.Category).HasForeignKey(c => c.Id);
            
 
 

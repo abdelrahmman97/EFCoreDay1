@@ -14,7 +14,7 @@ namespace EFCoreDay1.Models
         public float RateValue { get; set; }
         public string RateMassage { get; set; }
 
-        public ICollection<Media> Media { get; set; }
+        public ICollection<RequestMedia> Media { get; set; }
         public ICollection<RequestOffer> RequestOffer { get; set; }
         public User User { get; set; }
     }

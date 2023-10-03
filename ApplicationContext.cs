@@ -22,7 +22,7 @@ namespace EFCoreDay1
             modelBuilder.ApplyConfiguration<ServiceCategory>(new ServiceCategoryConfiguration());
             modelBuilder.ApplyConfiguration<Request>(new RequestConfiguration());
             modelBuilder.ApplyConfiguration<RequestOffer>(new RequestOfferConfiguratoin());
-            modelBuilder.ApplyConfiguration<Media>(new MediaConfiguration());
+            modelBuilder.ApplyConfiguration<RequestMedia>(new RequestMediaConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
