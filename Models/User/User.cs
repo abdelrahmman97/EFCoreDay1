@@ -16,10 +16,6 @@ namespace EFCoreDay1.Models
         public byte[] PasswordSlat { get; set; }
         public string ProfilePic { get; set; }
         public int RoleID { get; set; }
-
-
-        public int shopID { get; set; }
-
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<Service> Services { get; set; }
         public ICollection<RequestOffer> RequestOffer { get; set; }

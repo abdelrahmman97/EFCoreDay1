@@ -16,7 +16,7 @@ namespace EFCoreDay1.Models
             builder.Property(i => i.ID).ValueGeneratedOnAdd();
             builder.Property(i => i.Details).IsRequired().HasMaxLength(500);
             builder.Property(i => i.ExpectSalary).IsRequired();
-            builder.Property(i => i.State).IsRequired().HasColumnType("bit");
+            builder.Property(i => i.State).IsRequired();
             builder.Property(i => i.StartDate).IsRequired();
             builder.Property(i => i.EndDate).IsRequired();
             builder.Property(i => i.RateValue).IsRequired();

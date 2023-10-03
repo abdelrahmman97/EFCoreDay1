@@ -13,7 +13,7 @@ namespace EFCoreDay1.Models
         public int ProviderID { get; set; }
 
         public User User { get; set; }
-        public ServicCategory ServiceCategory { get; set; }
+        public ServiceCategory ServiceCategory { get; set; }
 
     }
 }

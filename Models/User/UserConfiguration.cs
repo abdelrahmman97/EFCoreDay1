@@ -19,7 +19,7 @@ namespace EFCoreDay1.Models
             builder.Property(u => u.Address).IsRequired().HasMaxLength(250);
             builder.Property(u => u.Username).IsRequired().HasMaxLength(250);
             builder.Property(u => u.Email).IsRequired().HasMaxLength(250);
-            builder.Property(u => u.HashedPassword).IsRequired();
+            builder.Property(u => u.PasswordHash).IsRequired();
             builder.Property(u => u.ProfilePic).IsRequired();
 
         }
