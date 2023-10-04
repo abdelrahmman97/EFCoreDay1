@@ -12,16 +12,14 @@ namespace EFCoreDay1.Models
     {
 
 
-       
+
        public void Configure(EntityTypeBuilder<Message> builder)
         {
-            builder.ToTable("Message");
+            builder.ToTable("Message","Chat");
             builder.HasKey(i => i.ID);
             builder.Property(i => i.ID).ValueGeneratedOnAdd();
             builder.Property(i => i.Content).IsRequired().HasMaxLength(500);
             builder.Property(i => i.Date).IsRequired();
-
-            builder.HasOne(i => i.User).WithMany(i => i.Messages).HasForeignKey(i => i.SenderId).IsRequired();
             builder.HasOne(i => i.Chat).WithMany(i => i.Messages).HasForeignKey(i => i.ChatId).IsRequired();
 
         }

@@ -7,7 +7,7 @@ namespace EFCoreDay1.Models
     {
         public void Configure(EntityTypeBuilder<Service> builder)
         {
-            builder.ToTable("Service");
+            builder.ToTable("Service", "Service");
             builder.HasKey(D => D.ID);
             builder.Property(n => n.Title).IsRequired().HasMaxLength(250);
             builder.Property(D => D.Discription).IsRequired().HasMaxLength(250);

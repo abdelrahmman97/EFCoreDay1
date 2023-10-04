@@ -9,7 +9,7 @@ namespace EFCoreDay1.Models
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
-            builder.ToTable("Role");
+            builder.ToTable("Role", "User");
             builder.HasKey(r => r.ID);
             builder.Property(r => r.ID).ValueGeneratedOnAdd();
             builder.Property(r => r.Name).IsRequired().HasMaxLength(100);

@@ -9,7 +9,7 @@ namespace EFCoreDay1.Models
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable("User");
+            builder.ToTable("User", "User");
             builder.HasKey(u => u.ID);
             builder.Property(u => u.ID).ValueGeneratedOnAdd();
             builder.Property(u => u.FName).IsRequired().HasMaxLength(128);

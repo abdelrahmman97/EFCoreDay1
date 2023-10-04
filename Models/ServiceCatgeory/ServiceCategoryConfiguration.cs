@@ -9,13 +9,9 @@ namespace EFCoreDay1.Models
     {
         public void Configure(EntityTypeBuilder<ServiceCategory> builder)
         {
+            builder.ToTable("ServiceCategory", "Service");
             builder.HasKey(x => x.ID);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
-
-            //builder.HasMany(e => e.Services)
-            //     .WithOne(e => e.Category)
-            //     .HasForeignKey(e => e.CategoryId)
-            //     .IsRequired();
         }
     }
 }

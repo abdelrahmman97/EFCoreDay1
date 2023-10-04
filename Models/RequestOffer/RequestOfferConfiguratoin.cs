@@ -11,7 +11,7 @@ namespace EFCoreDay1.Models
     {
         public void Configure(EntityTypeBuilder<RequestOffer> builder)
         {
-            builder.ToTable("RequestOffer");
+            builder.ToTable("RequestOffer", "Service");
             builder.HasKey(i => i.ID);
             builder.Property(i => i.ID).ValueGeneratedOnAdd();
             builder.Property(s => s.State).IsRequired().HasMaxLength(15);

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFCoreDay1.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20231003153059_initailcreate")]
-    partial class initailcreate
+    [Migration("20231004143314_init  ")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,34 +25,89 @@ namespace EFCoreDay1.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("EFCoreDay1.Models.Category", b =>
+            modelBuilder.Entity("EFCoreDay1.Models.Chat", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("FirstUserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Catagory")
+                    b.Property<Guid>("RequestID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SecondUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("RequestID");
+
+                    b.HasIndex("SecondUserId");
+
+                    b.ToTable("Chat", "Chat");
+                });
+
+            modelBuilder.Entity("EFCoreDay1.Models.Message", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ChatId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
-                    b.ToTable("Category", (string)null);
+                    b.Property<Guid>("SenderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ChatId");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Message", "Chat");
+                });
+
+            modelBuilder.Entity("EFCoreDay1.Models.MessageMedia", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("Content")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<Guid>("MessageID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("MessageID");
+
+                    b.ToTable("MessageMedia", "Chat");
                 });
 
             modelBuilder.Entity("EFCoreDay1.Models.Product", b =>
                 {
-                    b.Property<int>("ProductID")
+                    b.Property<Guid>("ProductID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductID"));
-
-                    b.Property<int>("CategoryID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CategoryID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -62,8 +117,8 @@ namespace EFCoreDay1.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("ShopID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ShopID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Stoke")
                         .HasColumnType("int");
@@ -77,76 +132,86 @@ namespace EFCoreDay1.Migrations
 
                     b.HasIndex("ShopID");
 
-                    b.ToTable("Products");
+                    b.ToTable("Product", "Product");
+                });
+
+            modelBuilder.Entity("EFCoreDay1.Models.ProductCategory", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Catagory")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("ProductCategory", "Product");
                 });
 
             modelBuilder.Entity("EFCoreDay1.Models.ProductMedia", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("MeadiUrl")
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
 
                     b.HasIndex("ProductID");
 
-                    b.ToTable("ProductMedias");
+                    b.ToTable("ProductMedia", "Product");
                 });
 
             modelBuilder.Entity("EFCoreDay1.Models.ProductRate", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("CustomerID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<float>("Rate")
                         .HasColumnType("real");
 
-                    b.Property<int>("customerID")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("UserID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("userID")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("userID");
+                    b.HasIndex("UserID");
 
-                    b.ToTable("ProductRates");
+                    b.ToTable("ProductRate", "Product");
                 });
 
             modelBuilder.Entity("EFCoreDay1.Models.Request", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("CleintID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CleintID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Details")
                         .IsRequired()
@@ -173,55 +238,51 @@ namespace EFCoreDay1.Migrations
                     b.Property<int>("State")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserID")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("UserID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Request", (string)null);
+                    b.ToTable("Request", "Service");
                 });
 
             modelBuilder.Entity("EFCoreDay1.Models.RequestMedia", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("MediaUrl")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("RequestID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("RequestID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
 
                     b.HasIndex("RequestID");
 
-                    b.ToTable("Media", (string)null);
+                    b.ToTable("RequestMedia", "Service");
                 });
 
             modelBuilder.Entity("EFCoreDay1.Models.RequestOffer", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDirect")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ProviderID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProviderID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("RequestID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("RequestID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("State")
                         .HasMaxLength(15)
@@ -233,16 +294,14 @@ namespace EFCoreDay1.Migrations
 
                     b.HasIndex("RequestID");
 
-                    b.ToTable("RequestOffer", (string)null);
+                    b.ToTable("RequestOffer", "Service");
                 });
 
             modelBuilder.Entity("EFCoreDay1.Models.Role", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -251,19 +310,17 @@ namespace EFCoreDay1.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Role", (string)null);
+                    b.ToTable("Role", "User");
                 });
 
             modelBuilder.Entity("EFCoreDay1.Models.Service", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("CategoryID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CategoryID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Discription")
                         .IsRequired()
@@ -273,8 +330,8 @@ namespace EFCoreDay1.Migrations
                     b.Property<double>("ExpectedSalary")
                         .HasColumnType("float");
 
-                    b.Property<int>("ProviderID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProviderID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Rate")
                         .HasColumnType("float");
@@ -290,16 +347,14 @@ namespace EFCoreDay1.Migrations
 
                     b.HasIndex("ProviderID");
 
-                    b.ToTable("Service", (string)null);
+                    b.ToTable("Service", "Service");
                 });
 
             modelBuilder.Entity("EFCoreDay1.Models.ServiceCategory", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -308,16 +363,72 @@ namespace EFCoreDay1.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ServiceCategories");
+                    b.ToTable("ServiceCategory", "Service");
+                });
+
+            modelBuilder.Entity("EFCoreDay1.Models.ServiceRate", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<float>("NominateToOthers")
+                        .HasColumnType("real");
+
+                    b.Property<float>("RespectDeliveryTime")
+                        .HasColumnType("real");
+
+                    b.Property<Guid>("ServiceID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<float>("WorkQuality")
+                        .HasColumnType("real");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ServiceID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("ServiceRate", "Service");
+                });
+
+            modelBuilder.Entity("EFCoreDay1.Models.Shop", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Shop", "Shop");
                 });
 
             modelBuilder.Entity("EFCoreDay1.Models.User", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -343,7 +454,7 @@ namespace EFCoreDay1.Migrations
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<byte[]>("PasswordSlat")
+                    b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("PhoneNo")
@@ -355,8 +466,8 @@ namespace EFCoreDay1.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("RoleID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SSN")
                         .IsRequired()
@@ -370,22 +481,20 @@ namespace EFCoreDay1.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("User", "User");
                 });
 
             modelBuilder.Entity("EFCoreDay1.Models.UserRole", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    b.Property<Guid>("RoleID")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("RoleID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("ID");
 
@@ -393,46 +502,65 @@ namespace EFCoreDay1.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("UserRole", (string)null);
+                    b.ToTable("UserRole", "User");
                 });
 
-            modelBuilder.Entity("EFCoreDay1.Models.shop", b =>
+            modelBuilder.Entity("EFCoreDay1.Models.Chat", b =>
                 {
-                    b.Property<int>("ShopID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.HasOne("EFCoreDay1.Models.Request", "Request")
+                        .WithMany()
+                        .HasForeignKey("RequestID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ShopID"));
+                    b.HasOne("EFCoreDay1.Models.User", "User")
+                        .WithMany("Chats")
+                        .HasForeignKey("SecondUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                    b.Navigation("Request");
 
-                    b.Property<int>("OwnerID")
-                        .HasColumnType("int");
+                    b.Navigation("User");
+                });
 
-                    b.Property<byte[]>("ShopLogo")
-                        .HasColumnType("varbinary(max)");
+            modelBuilder.Entity("EFCoreDay1.Models.Message", b =>
+                {
+                    b.HasOne("EFCoreDay1.Models.Chat", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<string>("ShopName")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasOne("EFCoreDay1.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID");
 
-                    b.HasKey("ShopID");
+                    b.Navigation("Chat");
 
-                    b.HasIndex("OwnerID")
-                        .IsUnique();
+                    b.Navigation("User");
+                });
 
-                    b.ToTable("Shops");
+            modelBuilder.Entity("EFCoreDay1.Models.MessageMedia", b =>
+                {
+                    b.HasOne("EFCoreDay1.Models.Message", "Message")
+                        .WithMany("MessageMedias")
+                        .HasForeignKey("MessageID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Message");
                 });
 
             modelBuilder.Entity("EFCoreDay1.Models.Product", b =>
                 {
-                    b.HasOne("EFCoreDay1.Models.Category", "Category")
+                    b.HasOne("EFCoreDay1.Models.ProductCategory", "Category")
                         .WithMany("Prouducts")
                         .HasForeignKey("CategoryID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EFCoreDay1.Models.shop", "Shop")
+                    b.HasOne("EFCoreDay1.Models.Shop", "Shop")
                         .WithMany("Products")
                         .HasForeignKey("ShopID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -446,7 +574,7 @@ namespace EFCoreDay1.Migrations
             modelBuilder.Entity("EFCoreDay1.Models.ProductMedia", b =>
                 {
                     b.HasOne("EFCoreDay1.Models.Product", "Product")
-                        .WithMany("productMedias")
+                        .WithMany("ProductMedias")
                         .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -462,13 +590,13 @@ namespace EFCoreDay1.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EFCoreDay1.Models.User", "user")
+                    b.HasOne("EFCoreDay1.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("userID");
+                        .HasForeignKey("UserID");
 
                     b.Navigation("Product");
 
-                    b.Navigation("user");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EFCoreDay1.Models.Request", b =>
@@ -482,13 +610,13 @@ namespace EFCoreDay1.Migrations
 
             modelBuilder.Entity("EFCoreDay1.Models.RequestMedia", b =>
                 {
-                    b.HasOne("EFCoreDay1.Models.Request", "request")
+                    b.HasOne("EFCoreDay1.Models.Request", "Request")
                         .WithMany("Media")
                         .HasForeignKey("RequestID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("request");
+                    b.Navigation("Request");
                 });
 
             modelBuilder.Entity("EFCoreDay1.Models.RequestOffer", b =>
@@ -529,6 +657,36 @@ namespace EFCoreDay1.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("EFCoreDay1.Models.ServiceRate", b =>
+                {
+                    b.HasOne("EFCoreDay1.Models.Service", "Service")
+                        .WithMany("ServiceRates")
+                        .HasForeignKey("ServiceID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("EFCoreDay1.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("EFCoreDay1.Models.Shop", b =>
+                {
+                    b.HasOne("EFCoreDay1.Models.User", "Owner")
+                        .WithOne("Shop")
+                        .HasForeignKey("EFCoreDay1.Models.Shop", "ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("EFCoreDay1.Models.UserRole", b =>
                 {
                     b.HasOne("EFCoreDay1.Models.Role", "Role")
@@ -548,27 +706,26 @@ namespace EFCoreDay1.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("EFCoreDay1.Models.shop", b =>
+            modelBuilder.Entity("EFCoreDay1.Models.Chat", b =>
                 {
-                    b.HasOne("EFCoreDay1.Models.User", "Owner")
-                        .WithOne("Shop")
-                        .HasForeignKey("EFCoreDay1.Models.shop", "OwnerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Owner");
+                    b.Navigation("Messages");
                 });
 
-            modelBuilder.Entity("EFCoreDay1.Models.Category", b =>
+            modelBuilder.Entity("EFCoreDay1.Models.Message", b =>
                 {
-                    b.Navigation("Prouducts");
+                    b.Navigation("MessageMedias");
                 });
 
             modelBuilder.Entity("EFCoreDay1.Models.Product", b =>
                 {
-                    b.Navigation("ProductRates");
+                    b.Navigation("ProductMedias");
 
-                    b.Navigation("productMedias");
+                    b.Navigation("ProductRates");
+                });
+
+            modelBuilder.Entity("EFCoreDay1.Models.ProductCategory", b =>
+                {
+                    b.Navigation("Prouducts");
                 });
 
             modelBuilder.Entity("EFCoreDay1.Models.Request", b =>
@@ -583,13 +740,25 @@ namespace EFCoreDay1.Migrations
                     b.Navigation("UserRoles");
                 });
 
+            modelBuilder.Entity("EFCoreDay1.Models.Service", b =>
+                {
+                    b.Navigation("ServiceRates");
+                });
+
             modelBuilder.Entity("EFCoreDay1.Models.ServiceCategory", b =>
                 {
                     b.Navigation("Services");
                 });
 
+            modelBuilder.Entity("EFCoreDay1.Models.Shop", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("EFCoreDay1.Models.User", b =>
                 {
+                    b.Navigation("Chats");
+
                     b.Navigation("Request");
 
                     b.Navigation("RequestOffer");
@@ -599,11 +768,6 @@ namespace EFCoreDay1.Migrations
                     b.Navigation("Shop");
 
                     b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("EFCoreDay1.Models.shop", b =>
-                {
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

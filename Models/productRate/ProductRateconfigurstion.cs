@@ -12,7 +12,8 @@ namespace EFCoreDay1.Models
     {
         public void Configure(EntityTypeBuilder<ProductRate> builder)
         {
-            builder.HasKey(x => x.Id);
+            builder.ToTable("ProductRate", "Product");
+            builder.HasKey(x => x.ID);
             builder.Property(r => r.Description).HasMaxLength(250).IsRequired();
             builder.Property(r=> r.Rate).IsRequired();
             builder.HasOne(P=>P.Product).WithMany(Pr=>Pr.ProductRates).HasForeignKey(x => x.ProductId);

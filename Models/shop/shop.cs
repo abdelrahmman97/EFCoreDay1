@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace EFCoreDay1.Models
 {
-    public class shop
+    public class Shop
     {
-        public int ShopID { get; set; }
-        public string ShopName { get; set; }
+        public Guid ID { get; set; }
+        public string Name { get; set; }
         public string Address { get; set; }
-        public byte[] ShopLogo { get; set; }
+        public string Logo { get; set; }
 
-        public int OwnerID { get; set; }
         public User Owner { get; set; }
         public ICollection<Product> Products { get; set; }
     }

@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EFCoreDay1.Models
 {
-    public class ProductconfigurstionBase : IEntityTypeConfiguration<Product>
+    public class ProductConfigurstion : IEntityTypeConfiguration<Product>
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
+            builder.ToTable("Product", "Product");
             builder.HasKey(p => p.ProductID);
             builder.Property(p => p.ProductName).HasMaxLength(50);
             builder.Property(p => p.Description).HasMaxLength(500);
